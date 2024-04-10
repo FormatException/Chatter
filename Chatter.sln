@@ -1,0 +1,60 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34202.233
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chatter", "Chatter\Chatter.csproj", "{BD852213-066A-441E-881F-06BA81892FEF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChatterChatHandler", "ChatterChatHandler\ChatterChatHandler.csproj", "{5B2B8C3A-9BFA-4828-A2A2-7DC2D8376A30}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChatterChatHandlerBasic", "ChatterChatHandlerBasic\ChatterChatHandlerBasic.csproj", "{C11B7847-5612-4403-BCB1-41E51AC9184A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatterAPI", "ChatterAPI\ChatterAPI.csproj", "{FFAF16AC-F4B2-4042-9F49-E8F88AF02DAF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatterChatHandlerBackgroundJob", "ChatterChatHandlerBackgroundJob\ChatterChatHandlerBackgroundJob.csproj", "{25BF444C-35BD-4178-8B6F-44DE542E5053}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{82048B00-A62F-422A-AFB0-C119D7856C31}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatterChatHandlerSignalR", "ChatterChatHandlerSignalR\ChatterChatHandlerSignalR.csproj", "{D2C320DD-2BFC-4F92-BEEF-2E1E0748A078}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BD852213-066A-441E-881F-06BA81892FEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD852213-066A-441E-881F-06BA81892FEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD852213-066A-441E-881F-06BA81892FEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD852213-066A-441E-881F-06BA81892FEF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B2B8C3A-9BFA-4828-A2A2-7DC2D8376A30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B2B8C3A-9BFA-4828-A2A2-7DC2D8376A30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B2B8C3A-9BFA-4828-A2A2-7DC2D8376A30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B2B8C3A-9BFA-4828-A2A2-7DC2D8376A30}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C11B7847-5612-4403-BCB1-41E51AC9184A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C11B7847-5612-4403-BCB1-41E51AC9184A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C11B7847-5612-4403-BCB1-41E51AC9184A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C11B7847-5612-4403-BCB1-41E51AC9184A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFAF16AC-F4B2-4042-9F49-E8F88AF02DAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFAF16AC-F4B2-4042-9F49-E8F88AF02DAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFAF16AC-F4B2-4042-9F49-E8F88AF02DAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFAF16AC-F4B2-4042-9F49-E8F88AF02DAF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{25BF444C-35BD-4178-8B6F-44DE542E5053}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{25BF444C-35BD-4178-8B6F-44DE542E5053}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{25BF444C-35BD-4178-8B6F-44DE542E5053}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{25BF444C-35BD-4178-8B6F-44DE542E5053}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2C320DD-2BFC-4F92-BEEF-2E1E0748A078}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2C320DD-2BFC-4F92-BEEF-2E1E0748A078}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2C320DD-2BFC-4F92-BEEF-2E1E0748A078}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2C320DD-2BFC-4F92-BEEF-2E1E0748A078}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B9FCEA8F-BE0F-4CA1-8051-FF94B614CE51}
+	EndGlobalSection
+EndGlobal
