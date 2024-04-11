@@ -8,10 +8,10 @@ public class SignalRChatHandler : ChatHandler
 {
     public override string Name => "Signal R Chat Handler";
 
-    public override string Description => "Talks to the Chatter API and users Signal R to send and receive messages.";
-
+    public override string Description => "Talks to the Chatter API and uses SignalR to send and receive messages to the API.";
 
     HubConnection connection;
+
     public SignalRChatHandler(IMessenger messenger) : base(messenger)
     {
         connection = new HubConnectionBuilder()
