@@ -1,3 +1,4 @@
+# Chatter
 A sample chat application that demonstrates multiple Microsoft technologines.
 This include:
 WPF
@@ -6,4 +7,3 @@ CommunityToolkit.MVVM
 CommunityToolkit.MVVM.IMessenger
 Minimal API
 SignalR
-# Chatter
