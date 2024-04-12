@@ -1,5 +1,5 @@
 # Chatter
-A sample chat application that demonstrates multiple Microsoft technologines.
+A sample chat application that demonstrates multiple Microsoft technologies.
 This include:
 WPF
 Dependency Injection
