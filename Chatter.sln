@@ -9,16 +9,18 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChatterChatHandler", "Chatt
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChatterChatHandlerBasic", "ChatterChatHandlerBasic\ChatterChatHandlerBasic.csproj", "{C11B7847-5612-4403-BCB1-41E51AC9184A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatterAPI", "ChatterAPI\ChatterAPI.csproj", "{FFAF16AC-F4B2-4042-9F49-E8F88AF02DAF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChatterAPI", "ChatterAPI\ChatterAPI.csproj", "{FFAF16AC-F4B2-4042-9F49-E8F88AF02DAF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatterChatHandlerBackgroundJob", "ChatterChatHandlerBackgroundJob\ChatterChatHandlerBackgroundJob.csproj", "{25BF444C-35BD-4178-8B6F-44DE542E5053}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChatterChatHandlerBackgroundJob", "ChatterChatHandlerBackgroundJob\ChatterChatHandlerBackgroundJob.csproj", "{25BF444C-35BD-4178-8B6F-44DE542E5053}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{82048B00-A62F-422A-AFB0-C119D7856C31}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatterChatHandlerSignalR", "ChatterChatHandlerSignalR\ChatterChatHandlerSignalR.csproj", "{D2C320DD-2BFC-4F92-BEEF-2E1E0748A078}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChatterChatHandlerSignalR", "ChatterChatHandlerSignalR\ChatterChatHandlerSignalR.csproj", "{D2C320DD-2BFC-4F92-BEEF-2E1E0748A078}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatPluginLoader", "ChatPluginLoader\ChatPluginLoader.csproj", "{7DFD3EFD-E54C-45C5-B81D-E86CD50A7140}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -50,6 +52,10 @@ Global
 		{D2C320DD-2BFC-4F92-BEEF-2E1E0748A078}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D2C320DD-2BFC-4F92-BEEF-2E1E0748A078}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D2C320DD-2BFC-4F92-BEEF-2E1E0748A078}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7DFD3EFD-E54C-45C5-B81D-E86CD50A7140}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7DFD3EFD-E54C-45C5-B81D-E86CD50A7140}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7DFD3EFD-E54C-45C5-B81D-E86CD50A7140}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7DFD3EFD-E54C-45C5-B81D-E86CD50A7140}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

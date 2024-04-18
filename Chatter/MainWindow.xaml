@@ -21,6 +21,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <materialDesign:Card
             Grid.Row="0"
@@ -89,14 +90,22 @@
             ItemsSource="{Binding AvailableFontStyles}"
             SelectedItem="{Binding FontStyle}"
             Style="{StaticResource MaterialDesignFilledComboBox}" />
-        <TextBox
+        <ComboBox
             Grid.Row="3"
+            Margin="5"
+            materialDesign:HintAssist.Hint="Chat Handler"
+            ItemsSource="{Binding ChatPlugins}"
+            SelectedItem="{Binding ChatHandler}"
+            DisplayMemberPath="Name"
+            Style="{StaticResource MaterialDesignFilledComboBox}" />
+        <TextBox
+            Grid.Row="4"
             Margin="5,0,5,15"
             materialDesign:HintAssist.HelperTextFontSize="16"
             materialDesign:HintAssist.Hint="Alias"
             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
             Text="{Binding Alias, UpdateSourceTrigger=PropertyChanged}" />
-        <Grid Grid.Row="4">
+        <Grid Grid.Row="5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />

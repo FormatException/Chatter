@@ -1,16 +1,19 @@
-﻿using Chatter.ViewModels;
+﻿using ChatPluginLoader;
+using Chatter.ViewModels;
 using ChatterChatHandler;
-using ChatterChatHandlerBackgroundJob;
-using ChatterChatHandlerBasic;
-using ChatterChatHandlerSignalR;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using Microsoft.Extensions.Logging.Abstractions;
+using System;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
+using System.Windows.Shapes;
 using System.Windows.Threading;
+using Path = System.IO.Path;
 
 namespace Chatter;
 
@@ -52,13 +55,27 @@ public partial class MainWindowViewModel : ObservableObject, IRecipient<WriteToC
         get => availableFontStyles;
     }
 
+    private ObservableCollection<ChatHandler> chatPlugins = new ObservableCollection<ChatHandler>();
+    public ObservableCollection<ChatHandler> ChatPlugins
+    {
+        get => chatPlugins;
+    }
 
     [ObservableProperty]
     bool isColorPickerExpanded = false;
 
+    [ObservableProperty]
+    ChatHandler chatHandler = null;
+    partial void OnChatHandlerChanging(ChatHandler? oldValue, ChatHandler newValue)
+    {
+        if (oldValue != null)
+            oldValue.Deactivate();
+        if (newValue != null) 
+            newValue.Activate();
+    }
+
     protected Dispatcher Dispatcher { get; }
     protected IMessenger Messenger { get; }
-    protected ChatHandler ChatHandler { get; set; }
 
     /// <summary>
     /// ctor for MainWindowViewModel
@@ -74,12 +91,25 @@ public partial class MainWindowViewModel : ObservableObject, IRecipient<WriteToC
 
         Messenger = messenger;
         Messenger.RegisterAll(this);
-        //Messenger.Register<MainWindowViewModel, WriteToChatMessage>(this, (r, m) => r.Receive(m));
 
-        //ChatHandler = new SystemMessageChatHandler(Messenger);
-        //ChatHandler = new BasicChatHandler(Messenger);
-        //ChatHandler = new BackgroundChatHandler(Messenger);
-        ChatHandler = new SignalRChatHandler(Messenger);
+        LoadPluginsAsync();
+    }
+
+    private async Task LoadPluginsAsync()
+    {
+        var baseDir = AppDomain.CurrentDomain.BaseDirectory;
+        var pluginPath = Path.Combine(baseDir, "Plugins");
+        var plugins = PluginManager.LoadPlugins<ChatHandler>(pluginPath, Messenger);
+
+        await Dispatcher.InvokeAsync(() =>
+        {
+            foreach(var plugin in plugins)
+            {
+                ChatPlugins.Add(plugin);
+            }
+            if (ChatPlugins.Count > 0)
+                ChatHandler = ChatPlugins[0];
+        });
     }
 
     public async void Receive(WriteToChatMessage message)

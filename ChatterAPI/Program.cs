@@ -41,12 +41,7 @@ app.MapHub<ChatterChatHub>("/chatterChatHub");
 
 app.MapPost("/sendMessage", async (IDbContextFactory<MessageDbContext> dbFactory, IHubContext<ChatterChatHub, IChatClient> hub, WriteToChatMessage chatMessage) =>
 {
-    await ChatterChatHub.SendMessage(dbFactory, hub.Clients.All, chatMessage);
-});
-
-app.MapPost("/sendMessage2", async (IDbContextFactory<MessageDbContext> dbFactory, IHubContext<ChatterChatHub> hub, WriteToChatMessage chatMessage) =>
-{
-    await hub.Clients.All.SendAsync("ReceiveMessage", chatMessage);
+    return await ChatterChatHub.SendMessage(dbFactory, hub.Clients.All, chatMessage);
 });
 
 app.MapGet("/getMessages/{lastId}", async (IDbContextFactory<MessageDbContext> dbFactory, int lastId, [FromQuery(Name = "skip")] int skip = 0, [FromQuery(Name = "take")] int take = 0) =>

@@ -25,7 +25,16 @@ public class BackgroundChatHandler : ChatHandler, IDisposable
     public BackgroundChatHandler(IMessenger messenger) : base(messenger)
     {
         client = new HttpClient();
+    }
+
+    public override void Activate()
+    {
         timer = new Timer(GetRecentMessages, null, TimeSpan.Zero, TimeSpan.FromSeconds(1));
+    }
+
+    public override void Deactivate()
+    {
+        timer.Dispose();
     }
 
     public override async Task<bool> SendChatAsync(WriteToChatMessage message)

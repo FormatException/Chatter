@@ -19,4 +19,6 @@ public abstract class ChatHandler
     }
 
     public abstract Task<bool> SendChatAsync(WriteToChatMessage message);
+    public abstract void Activate();
+    public abstract void Deactivate();
 }
