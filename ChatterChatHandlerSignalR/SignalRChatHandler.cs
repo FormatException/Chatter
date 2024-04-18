@@ -39,8 +39,16 @@ public class SignalRChatHandler : ChatHandler
         {
             Messenger.Send(message);
         });
+    }
 
+    public override void Activate()
+    {
         connection.StartAsync();
+    }
+
+    public override void Deactivate()
+    {
+        connection.StopAsync();
     }
 
     public override async Task<bool> SendChatAsync(WriteToChatMessage message)

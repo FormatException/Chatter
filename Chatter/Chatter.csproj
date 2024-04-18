@@ -26,9 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ChatterChatHandlerBackgroundJob\ChatterChatHandlerBackgroundJob.csproj" />
-    <ProjectReference Include="..\ChatterChatHandlerBasic\ChatterChatHandlerBasic.csproj" />
-    <ProjectReference Include="..\ChatterChatHandlerSignalR\ChatterChatHandlerSignalR.csproj" />
+    <ProjectReference Include="..\ChatPluginLoader\ChatPluginLoader.csproj" />
     <ProjectReference Include="..\ChatterChatHandler\ChatterChatHandler.csproj" />
   </ItemGroup>
 

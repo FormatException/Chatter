@@ -16,6 +16,16 @@ public class BasicChatHandler : ChatHandler
 
     public BasicChatHandler(IMessenger messenger) : base(messenger) { }
 
+    public override void Activate()
+    {
+        //NOOP
+    }
+
+    public override void Deactivate()
+    {
+        //NOOP
+    }
+
     public override Task<bool> SendChatAsync(WriteToChatMessage message)
     {
         Messenger.Send(message);
