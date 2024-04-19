@@ -24,32 +24,23 @@ namespace ChatPluginLoader
             List<T> values = new List<T>();
             var dllFiles = Directory.GetFiles(pluginPath, "*.dll", SearchOption.AllDirectories);
 
+            List<Type> classesToLoad = new List<Type>();
             foreach (var dllFile in dllFiles)
             {
-                var assembly = System.Reflection.Assembly.LoadFile(dllFile);
+                var assembly = Assembly.LoadFile(dllFile);
 
                 Type[] types = assembly.GetTypes();
                 foreach (Type type in types)
                 {
                     if (type.BaseType == typeof(T))
-                    {
-                        var dirPath = Path.GetDirectoryName(dllFile);
-
-                        //note that exe is also a valid assembly but let's not mess with that right now
-                        var localDlls = Directory.GetFiles(dirPath, "*.dll", SearchOption.TopDirectoryOnly);
-
-                        foreach (var localDll in localDlls)
-                        {
-                            Assembly.LoadFile(localDll);
-                        }
-
-                        //okay, so we found our class, now we also need to load all the other dlls
-                        //in here before we try to instantiate it
-                        var obj = Activator.CreateInstance(type, objectsOnCtor) as T;
-                        if (obj != null)
-                            values.Add(obj);
-                    }
+                        classesToLoad.Add(type);
                 }
+            }
+            foreach (var type in classesToLoad)
+            {
+                var obj = Activator.CreateInstance(type, objectsOnCtor) as T;
+                if (obj != null)
+                    values.Add(obj);
             }
 
             return values;
