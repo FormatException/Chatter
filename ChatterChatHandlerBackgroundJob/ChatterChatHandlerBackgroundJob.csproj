@@ -1,15 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-	<TargetFramework>net8.0-windows</TargetFramework>
+	<TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-	<OutputPath>$(SolutionDir)Chatter/bin/$(Configuration)/$(TargetFramework)/Plugins/ChatterChatHandlerBackgroundJob</OutputPath>
 	<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ChatterChatHandler\ChatterChatHandler.csproj" />
   </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+	<Exec Command="rmdir /q /s &quot;$(SolutionDir)Chatter\bin\$(Configuration)\net8.0-windows\Plugins\$(ProjectName)&quot; 2&gt; nul&#xD;&#xA;mkdir &quot;$(SolutionDir)Chatter\bin\$(Configuration)\net8.0-windows\Plugins\$(ProjectName)&quot;&#xD;&#xA;xcopy /s &quot;$(SolutionDir)$(ProjectName)\bin\$(Configuration)\$(TargetFramework)\*.*&quot; &quot;$(SolutionDir)Chatter\bin\$(Configuration)\net8.0-windows\Plugins\$(ProjectName)\&quot;" />
+  </Target>
 
 </Project>

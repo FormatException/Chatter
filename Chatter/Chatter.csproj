@@ -30,4 +30,8 @@
     <ProjectReference Include="..\ChatterChatHandler\ChatterChatHandler.csproj" />
   </ItemGroup>
 
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="rmdir /q /s &quot;$(SolutionDir)Chatter\bin\$(Configuration)\net8.0-windows\Plugins&quot; 2&gt; nul&#xD;&#xA;mkdir &quot;$(SolutionDir)Chatter\bin\$(Configuration)\net8.0-windows\Plugins&quot; 2&gt; nul" />
+  </Target>
+
 </Project>
