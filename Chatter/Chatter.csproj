@@ -30,8 +30,11 @@
     <ProjectReference Include="..\ChatterChatHandler\ChatterChatHandler.csproj" />
   </ItemGroup>
 
+  <!--
+  This can't run here.  Since this is a top-level project and there aren't any dependencies on the plugins, there is no guarantee that this will run before
+  the plugins try to run.  It's likely we'll just be deleting the plugins that were copied over
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
     <Exec Command="rmdir /q /s &quot;$(SolutionDir)Chatter\bin\$(Configuration)\net8.0-windows\Plugins&quot; 2&gt; nul&#xD;&#xA;mkdir &quot;$(SolutionDir)Chatter\bin\$(Configuration)\net8.0-windows\Plugins&quot; 2&gt; nul" />
-  </Target>
+  </Target>-->
 
 </Project>
