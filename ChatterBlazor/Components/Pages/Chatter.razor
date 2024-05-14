@@ -1,0 +1,161 @@
+﻿@using ChatPluginLoader
+@using ChatterChatHandler
+@using CommunityToolkit.Mvvm.Messaging
+@using ChatterBlazor.Components.Models
+
+@page "/chat"
+@* we want prerender false so OnInitalize isn't called twice
+   This can be mitigated by persisting state between prerender and render but that's
+   outside of the scope of this.
+   see:  https://learn.microsoft.com/en-us/aspnet/core/blazor/components/prerender?view=aspnetcore-8.0#persist-prerendered-state
+*@
+@rendermode @(new InteractiveServerRenderMode(prerender:false))
+
+@implements IRecipient<WriteToChatMessage>
+@implements IDisposable
+
+<PageTitle>Chatter Chat</PageTitle>
+
+<div class="input-group">
+    <div class="input-group-prepend col-3">
+        <span class="input-group-text" id="inputGroup-sizing-default">Chat Handler</span>
+    </div>
+    <select class="form-select" @bind="ChatHandlerIndex" aria-label="Default select example">
+        @for (int i = 0; i < chatPlugins.Count; i++)
+        {
+            var valueChoice = chatPlugins[i];
+            <option value="@i">@valueChoice.Name</option>
+        }
+    </select>
+</div>
+
+<div class="input-group" id="inputGroup-chat" style="height: 200px; overflow: auto">
+    <div class="input-group-prepend col-3">
+        <span class="input-group-text" id="inputGroup-sizing-default">Chat</span>
+    </div>
+    <ul>
+        @foreach (var chat in chats)
+        {
+            <li style="color:@chat.Foreground; background-color:@chat.Background; font-style:@chat.FontStyle">@chat.Text</li>
+        }
+    </ul>
+</div>
+
+<div class="input-group">
+    <div class="input-group-prepend col-3">
+        <span class="input-group-text" id="inputGroup-sizing-default">Alias</span>
+    </div>
+    <input type="text" class="form-control" @bind="alias" aria-describedby="inputGroup-sizing-default" />
+</div>
+
+<div class="input-group">
+    <div class="input-group-prepend col-3">
+        <span class="input-group-text" id="inputGroup-sizing-default">Message</span>
+    </div>
+    <input type="text" class="form-control" @bind="chatText" aria-describedby="inputGroup-sizing-default" />
+</div>
+
+<button class="btn btn-primary" @onclick="SendChat">Send</button>
+
+<script>
+    window.scrollElementToBottom = (elementId) => {
+        var elementToScroll = document.getElementById(elementId);
+        elementToScroll.scrollTop = elementToScroll.scrollHeight;
+    };
+</script>
+
+@code {
+    [Inject] IJSRuntime JSRuntime { get; set; }
+    [Inject] protected IMessenger Messenger { get; set; }
+
+    private List<ChatHandler> chatPlugins = new();
+    private ChatHandler chatHandler = null;
+
+    //old school get/set but we need to capture the set to handle the handler
+    //since bind takes over the @onchanged we can't use that when the value is changed and capture
+    //the change to the index both at the same time.  So just do it in the set
+    private int chatHandlerIndex = 0;
+    private int ChatHandlerIndex
+    {
+        get => chatHandlerIndex;
+        set
+        {
+            if (value != chatHandlerIndex)
+            {
+                chatHandlerIndex = value;
+                SetChatHandler();
+            }
+        }
+    }
+
+    private string chatText = "";
+    private string alias = "";
+
+    private List<ChatItem> chats = new();
+
+
+    protected override void OnInitialized()
+    {
+        Messenger.RegisterAll(this);
+
+        alias = "Blazor " + Guid.NewGuid().ToString();
+
+        var baseDir = AppDomain.CurrentDomain.BaseDirectory;
+        var pluginPath = Path.Combine(baseDir, "Plugins");
+        var plugins = PluginManager.LoadPlugins<ChatHandler>(pluginPath, Messenger);
+        chatPlugins.AddRange(plugins);
+        if (chatPlugins.Count > 0)
+        {
+            chatHandler = chatPlugins[0];
+            chatHandler.Activate();
+        }
+    }
+
+    private void SetChatHandler()
+    {
+        chatHandler.Deactivate();
+        chatHandler = chatPlugins[chatHandlerIndex];
+        chatHandler.Activate();
+    }
+
+    private async void SendChat()
+    {
+        if (string.IsNullOrEmpty(chatText)) return;
+        var successful = await chatHandler.SendChatAsync(new WriteToChatMessage(alias, chatText, "White", "Black", "Normal"));
+        if (successful)
+        {
+            chatText = "";
+            StateHasChanged();
+            return;
+        }
+
+        //if the message failed to send just write straight to the chat
+        Receive(new WriteToChatMessage(alias, $"FAILED TO SEND MESSAGE: {chatText}", "White", "Black", "Normal"));
+    }
+
+    public void Receive(WriteToChatMessage message)
+    {
+        var time = DateTime.Now.ToString("MM/dd/yy HH:mm:ss.fff zzz");
+        var alias = string.IsNullOrEmpty(message.alias) ? "Unknown" : message.alias;
+        var timeStampMessage = $"{alias} [{time}] {message.message}";
+
+        //strip transparency as it comes in as FF
+        var background = message.background?.Replace("#FF", "#");
+        var foreground = message.foreground?.Replace("#FF", "#");
+
+        //the receive is called on a different thread than the dispatcher thread
+        //so invoke the dispatcher thread to render the state changed
+        _ = InvokeAsync(() =>
+        {
+            chats.Add(new ChatItem(timeStampMessage, background, foreground, message.fontStyle));
+            StateHasChanged();
+            JSRuntime.InvokeVoidAsync("scrollElementToBottom", "inputGroup-chat");
+        });
+    }
+
+    public void Dispose()
+    {
+        chatHandler?.Deactivate();
+        Messenger?.UnregisterAll(this);
+    }
+}
