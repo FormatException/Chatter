@@ -31,7 +31,6 @@ public partial class MainWindowViewModel : ObservableObject, IRecipient<WriteToC
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(ForegroundBrush))]
     Color foreground = Colors.Black;
-
     public Brush ForegroundBrush
     {
         get => new SolidColorBrush(Foreground);
@@ -87,7 +86,7 @@ public partial class MainWindowViewModel : ObservableObject, IRecipient<WriteToC
         BindingOperations.EnableCollectionSynchronization(Chats, new());
 
         Dispatcher = dispatcher;
-        Alias = "Unknown " + Guid.NewGuid().ToString();
+        Alias = "Wpf " + Guid.NewGuid().ToString();
 
         Messenger = messenger;
         Messenger.RegisterAll(this);
