@@ -7,3 +7,4 @@ CommunityToolkit.MVVM<br/>
 CommunityToolkit.MVVM.IMessenger<br/>
 Minimal API<br/>
 SignalR<br/>
+Blazor<br/>
