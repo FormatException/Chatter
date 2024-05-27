@@ -30,9 +30,16 @@ public partial class MainViewModel : ObservableObject, IRecipient<WriteToChatMes
 
         Messenger = messenger;
         Messenger.RegisterAll(this);
-
-        ChatPlugins.Add(new BackgroundChatHandler(messenger, "https://10.0.2.2:7076"));
-        ChatPlugins.Add(new SignalRChatHandler(messenger, "https://10.0.2.2:7076/chatterChatHub"));
+        if (DeviceInfo.Current.Platform == DevicePlatform.WinUI || DeviceInfo.Current.Platform == DevicePlatform.macOS)
+        {
+            ChatPlugins.Add(new BackgroundChatHandler(messenger));
+            ChatPlugins.Add(new SignalRChatHandler(messenger));
+        }
+        else
+        {
+            ChatPlugins.Add(new BackgroundChatHandler(messenger, "https://10.0.2.2:7076"));
+            ChatPlugins.Add(new SignalRChatHandler(messenger, "https://10.0.2.2:7076/chatterChatHub"));
+        }
         ChatPlugins.Add(new BasicChatHandler(messenger));
         ChatHandler = ChatPlugins[0];
         //ChatHandler.Activate();
