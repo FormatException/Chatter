@@ -22,7 +22,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChatterChatHandlerSignalR",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChatPluginLoader", "ChatPluginLoader\ChatPluginLoader.csproj", "{7DFD3EFD-E54C-45C5-B81D-E86CD50A7140}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatterBlazor", "ChatterBlazor\ChatterBlazor.csproj", "{4EBF8631-6FDC-4B7B-9700-2F4D5143B51D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChatterBlazor", "ChatterBlazor\ChatterBlazor.csproj", "{4EBF8631-6FDC-4B7B-9700-2F4D5143B51D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatterMaui", "ChatterMaui\ChatterMaui.csproj", "{86968609-A5F8-481E-9CCA-19A80B0290A8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -62,6 +64,12 @@ Global
 		{4EBF8631-6FDC-4B7B-9700-2F4D5143B51D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4EBF8631-6FDC-4B7B-9700-2F4D5143B51D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4EBF8631-6FDC-4B7B-9700-2F4D5143B51D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86968609-A5F8-481E-9CCA-19A80B0290A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86968609-A5F8-481E-9CCA-19A80B0290A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86968609-A5F8-481E-9CCA-19A80B0290A8}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{86968609-A5F8-481E-9CCA-19A80B0290A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86968609-A5F8-481E-9CCA-19A80B0290A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86968609-A5F8-481E-9CCA-19A80B0290A8}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
