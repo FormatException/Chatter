@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="ChatterMaui.MainPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewModels="clr-namespace:ChatterMaui.ViewModels"
+    x:DataType="viewModels:MainViewModel">
+
+
+    <VerticalStackLayout>
+        <Grid Padding="30,0" HeightRequest="500">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Picker
+                Title="Select a chat handler"
+                Grid.Row="0"
+                ItemDisplayBinding="{Binding Name}"
+                ItemsSource="{Binding ChatPlugins}"
+                SelectedItem="{Binding ChatHandler}" />
+
+            <CollectionView
+                Grid.Row="1"
+                ItemsSource="{Binding Chats}"
+                ItemsUpdatingScrollMode="KeepLastItemInView"
+                VerticalScrollBarVisibility="Always">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="viewModels:ChatViewModel">
+                        <Grid>
+                            <Border 
+                                HeightRequest="1"
+                                VerticalOptions="End"/>
+                            <Label Margin="5" Text="{Binding Text}" />
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <Entry
+                Grid.Row="2"
+                HorizontalOptions="Fill"
+                Text="{Binding Alias}" />
+
+            <Entry
+                Grid.Row="3"
+                HorizontalOptions="Fill"
+                Text="{Binding ChatText}" />
+
+            <Button
+                Grid.Row="4"
+                BackgroundColor="#009499"
+                Command="{Binding SendChatCommand}"
+                HorizontalOptions="Fill"
+                Text="Send"
+                VerticalOptions="End" />
+        </Grid>
+    </VerticalStackLayout>
+
+</ContentPage>

@@ -20,7 +20,7 @@
     <div class="input-group-prepend col-3">
         <span class="input-group-text" id="inputGroup-sizing-default">Chat Handler</span>
     </div>
-    <select class="form-select" @bind="ChatHandlerIndex" aria-label="Default select example">
+    <select class="form-select" @bind="ChatHandlerIndex" aria-label="plugin select">
         @for (int i = 0; i < chatPlugins.Count; i++)
         {
             var valueChoice = chatPlugins[i];
@@ -121,7 +121,7 @@
     private async void SendChat()
     {
         if (string.IsNullOrEmpty(chatText)) return;
-        var successful = await chatHandler.SendChatAsync(new WriteToChatMessage(alias, chatText, "White", "Black", "Normal"));
+        var successful = await chatHandler.SendChatAsync(new WriteToChatMessage(alias, chatText, "#FFFFFFFF", "#FF000000", "Normal"));
         if (successful)
         {
             chatText = "";
@@ -130,7 +130,7 @@
         }
 
         //if the message failed to send just write straight to the chat
-        Receive(new WriteToChatMessage(alias, $"FAILED TO SEND MESSAGE: {chatText}", "White", "Black", "Normal"));
+        Receive(new WriteToChatMessage(alias, $"FAILED TO SEND MESSAGE: {chatText}", "#FFFFFFFF", "#FF000000", "Normal"));
     }
 
     public void Receive(WriteToChatMessage message)

@@ -12,10 +12,24 @@ public class SignalRChatHandler : ChatHandler
 
     HubConnection connection;
 
-    public SignalRChatHandler(IMessenger messenger) : base(messenger)
+    public SignalRChatHandler(IMessenger messenger) : this(messenger, null) { }
+    public SignalRChatHandler(IMessenger messenger, string? endPoint) : base(messenger)
     {
+        var url = endPoint ?? "https://localhost:7076/chatterChatHub";
+
         connection = new HubConnectionBuilder()
-                        .WithUrl("https://localhost:7076/chatterChatHub")
+                        .WithUrl(new Uri(url), options =>
+                        {
+                            //when using this in android it doesn't like self-issued certs
+                            HttpClientHandler handler = new HttpClientHandler();
+                            handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) =>
+                            {
+                                if (cert.Issuer.Equals("CN=localhost"))
+                                    return true;
+                                return errors == System.Net.Security.SslPolicyErrors.None;
+                            };
+                            options.HttpMessageHandlerFactory = _ => handler;
+                        })
                         .WithAutomaticReconnect()
                         .Build();
 

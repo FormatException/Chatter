@@ -14,11 +14,13 @@
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
 	<Exec Command="rmdir /q /s &quot;$(SolutionDir)Chatter\bin\$(Configuration)\net8.0-windows\Plugins\$(ProjectName)&quot; 2&gt; nul&#xD;&#xA;mkdir &quot;$(SolutionDir)Chatter\bin\$(Configuration)\net8.0-windows\Plugins\$(ProjectName)&quot;&#xD;&#xA;xcopy /s &quot;$(SolutionDir)$(ProjectName)\bin\$(Configuration)\$(TargetFramework)\*.*&quot; &quot;$(SolutionDir)Chatter\bin\$(Configuration)\net8.0-windows\Plugins\$(ProjectName)\&quot;" />
 	<Exec Command="rmdir /q /s &quot;$(SolutionDir)ChatterBlazor\bin\$(Configuration)\net8.0\Plugins\$(ProjectName)&quot; 2&gt; nul&#xD;&#xA;mkdir &quot;$(SolutionDir)ChatterBlazor\bin\$(Configuration)\net8.0\Plugins\$(ProjectName)&quot;&#xD;&#xA;xcopy /s &quot;$(SolutionDir)$(ProjectName)\bin\$(Configuration)\$(TargetFramework)\*.*&quot; &quot;$(SolutionDir)ChatterBlazor\bin\$(Configuration)\net8.0\Plugins\$(ProjectName)\&quot;" />
+	<!--<Exec Command="rmdir /q /s &quot;$(SolutionDir)ChatterMaui\bin\$(Configuration)\net8.0-android\Plugins\$(ProjectName)&quot; 2&gt; nul&#xD;&#xA;mkdir &quot;$(SolutionDir)ChatterMaui\bin\$(Configuration)\net8.0-android\Plugins\$(ProjectName)&quot;&#xD;&#xA;xcopy /s &quot;$(SolutionDir)$(ProjectName)\bin\$(Configuration)\$(TargetFramework)\*.*&quot; &quot;$(SolutionDir)ChatterMaui\bin\$(Configuration)\net8.0-android\Plugins\$(ProjectName)\&quot;" />-->
   </Target>
 
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
     <Exec Command="mkdir &quot;$(SolutionDir)Chatter\bin\$(Configuration)\net8.0-windows\Plugins&quot;" IgnoreExitCode="true" />
     <Exec Command="mkdir &quot;$(SolutionDir)ChatterBlazor\bin\$(Configuration)\net8.0\Plugins&quot;" IgnoreExitCode="true" />
+	<!--<Exec Command="mkdir &quot;$(SolutionDir)ChatterMaui\bin\$(Configuration)\net8.0-android\Plugins&quot;" IgnoreExitCode="true" />-->
   </Target>
 
 </Project>

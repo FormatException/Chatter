@@ -7,6 +7,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Extensions.Logging.Abstractions;
 using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Data;
@@ -69,7 +70,7 @@ public partial class MainWindowViewModel : ObservableObject, IRecipient<WriteToC
     {
         if (oldValue != null)
             oldValue.Deactivate();
-        if (newValue != null) 
+        if (newValue != null)
             newValue.Activate();
     }
 
@@ -102,7 +103,7 @@ public partial class MainWindowViewModel : ObservableObject, IRecipient<WriteToC
 
         await Dispatcher.InvokeAsync(() =>
         {
-            foreach(var plugin in plugins)
+            foreach (var plugin in plugins)
             {
                 ChatPlugins.Add(plugin);
             }
@@ -120,13 +121,17 @@ public partial class MainWindowViewModel : ObservableObject, IRecipient<WriteToC
             var alias = string.IsNullOrEmpty(message.alias) ? "Unknown" : message.alias;
             var timeStampMessage = $"{alias} [{time}] {message.message}";
 
-            Brush? background = null;
-            if (!string.IsNullOrEmpty(message.background))
-                background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(message.background));
+            Brush? background = null, foreground = null;
+            try
+            {
+                if (!string.IsNullOrEmpty(message.background))
+                    background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(message.background));
 
-            Brush? foreground = null;
-            if (!string.IsNullOrEmpty(message.foreground))
-                foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(message.foreground));
+                if (!string.IsNullOrEmpty(message.foreground))
+                    foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(message.foreground));
+            }
+            //FormatException is thrown here when a bad color comes in so just swallow it and go with defaults
+            catch (FormatException) { }
 
             FontStyle? fontStyle = null;
             //can't use a switch here because I can't define a constant value for the type of font style
