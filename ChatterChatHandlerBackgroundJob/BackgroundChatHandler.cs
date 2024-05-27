@@ -1,5 +1,6 @@
 ﻿using ChatterChatHandler;
 using CommunityToolkit.Mvvm.Messaging;
+using System.Diagnostics;
 using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
@@ -22,9 +23,12 @@ public class BackgroundChatHandler : ChatHandler, IDisposable
 
     public override string Description => "Utilizes a background timer to poll for pending messages.";
 
-    public BackgroundChatHandler(IMessenger messenger) : base(messenger)
+    public BackgroundChatHandler(IMessenger messenger) : this(messenger, null) { }
+    public BackgroundChatHandler(IMessenger messenger, string? endPoint) : base(messenger)
     {
-        client = new HttpClient();
+        baseUrl = endPoint ?? "https://localhost:7076";
+        //client = new HttpClient();
+        client = new HttpClient(GetInsecureHandler());
     }
 
     public override void Activate()
@@ -35,6 +39,19 @@ public class BackgroundChatHandler : ChatHandler, IDisposable
     public override void Deactivate()
     {
         timer.Dispose();
+    }
+
+    public static HttpClientHandler GetInsecureHandler()
+    {
+        //when using this in android it doesn't like self-issued certs
+        HttpClientHandler handler = new HttpClientHandler();
+        handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) =>
+        {
+            if (cert.Issuer.Equals("CN=localhost"))
+                return true;
+            return errors == System.Net.Security.SslPolicyErrors.None;
+        };
+        return handler;
     }
 
     public override async Task<bool> SendChatAsync(WriteToChatMessage message)
@@ -98,6 +115,10 @@ public class BackgroundChatHandler : ChatHandler, IDisposable
                 if (messagesFromServer.Count < take)
                     break;
             }
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine(ex.Message);
         }
         finally
         {
