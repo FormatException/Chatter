@@ -27,8 +27,12 @@ public class BackgroundChatHandler : ChatHandler, IDisposable
     public BackgroundChatHandler(IMessenger messenger, string? endPoint) : base(messenger)
     {
         baseUrl = endPoint ?? "https://localhost:7076";
-        //client = new HttpClient();
+#if DEBUG
         client = new HttpClient(GetInsecureHandler());
+#else
+        client = new HttpClient();
+#endif
+
     }
 
     public override void Activate()
@@ -41,6 +45,10 @@ public class BackgroundChatHandler : ChatHandler, IDisposable
         timer.Dispose();
     }
 
+    /// <summary>
+    /// Done per: https://learn.microsoft.com/en-us/previous-versions/xamarin/cross-platform/deploy-test/connect-to-local-web-services#bypass-the-certificate-security-check
+    /// </summary>
+    /// <returns></returns>
     public static HttpClientHandler GetInsecureHandler()
     {
         //when using this in android it doesn't like self-issued certs
@@ -115,10 +123,6 @@ public class BackgroundChatHandler : ChatHandler, IDisposable
                 if (messagesFromServer.Count < take)
                     break;
             }
-        }
-        catch (Exception ex)
-        {
-            Debug.WriteLine(ex.Message);
         }
         finally
         {

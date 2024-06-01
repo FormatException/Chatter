@@ -18,9 +18,11 @@ public class SignalRChatHandler : ChatHandler
         var url = endPoint ?? "https://localhost:7076/chatterChatHub";
 
         connection = new HubConnectionBuilder()
+#if DEBUG
                         .WithUrl(new Uri(url), options =>
                         {
                             //when using this in android it doesn't like self-issued certs
+                            //Done per: https://learn.microsoft.com/en-us/previous-versions/xamarin/cross-platform/deploy-test/connect-to-local-web-services#bypass-the-certificate-security-check
                             HttpClientHandler handler = new HttpClientHandler();
                             handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) =>
                             {
@@ -30,6 +32,9 @@ public class SignalRChatHandler : ChatHandler
                             };
                             options.HttpMessageHandlerFactory = _ => handler;
                         })
+#else
+                        .WithUrl(url)
+#endif
                         .WithAutomaticReconnect()
                         .Build();
 
